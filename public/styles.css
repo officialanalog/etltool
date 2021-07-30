@@ -3,8 +3,9 @@
 
 body {
   min-width: 1000px;
-  width: 100%;
+  width: 98%;
   background: #f5f6f8;
+  margin:auto;
 }
 .blue{
   background: #0B4996;
