@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Link } from "react-router-dom"
 import { topFunctions } from "../providers/TopProvider";
 export default function TransformSection() {
@@ -26,6 +26,29 @@ export default function TransformSection() {
         setIgnoreUnmappped
     } = useContext(topFunctions);
 
+    useEffect(() => {
+        if (ignoreUnmappped) {
+            if (typeof rowDetails !== undefined) {
+                for (var i = 0; i < rowDetails.length; i++) {
+                    if (rowDetails[i].new_name === "") {
+                        var rd = [...rowDetails];
+                        rd[i].ignoreRow = true;
+                        setRowDetails(rd);
+                    }
+                }
+            }
+        } else {
+            if (typeof rowDetails !== undefined) {
+                for (var i = 0; i < rowDetails.length; i++) {
+                    if (rowDetails[i].new_name === "") {
+                        var rd = [...rowDetails];
+                        rd[i].ignoreRow = false;
+                        setRowDetails(rd);
+                    }
+                }
+            }
+        }
+    }, [ignoreUnmappped]);
     return (
         <div className="transform_section">
             <div className="notes1">
@@ -153,7 +176,7 @@ export default function TransformSection() {
                                                                     validate(rowToTransform, e.target.value)
                                                                     setRowDetails(v);
                                                                 }
-                                                            }}>
+                                                            }} >
                                                             <span
                                                                 className="iconify" data-icon="iconoir:cancel" data-inline="false"
 
@@ -179,6 +202,7 @@ export default function TransformSection() {
                                     setIgnoreUnmappped(false);
                                 } else {
                                     setIgnoreUnmappped(true);
+
                                 }
                             }}
                         />
