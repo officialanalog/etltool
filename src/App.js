@@ -1,23 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext, useEffect } from "react";
+
+import { HashRouter, Route, Switch } from 'react-router-dom';
+
+import Transform from "./pages/Transform"
+import Sheet from './pages/Sheet';
+import Upload from './pages/Upload';
+
+import Login from './authentication/Login'
+import Signup from './authentication/Signup'
+import ForgotPassword from './authentication/ForgotPassword'
+import ChangePassword from './authentication/ChangePassword'
+
+import { topFunctions } from "./providers/TopProvider";
 
 function App() {
+  const {
+    currentUser,
+    message,
+    pageColor
+  } = useContext(topFunctions);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="body">
+        <HashRouter>
+          <Switch>
+            <Route path="/" component={currentUser !== "" ? Upload : Login} exact />
+            <Route path="/upload" component={currentUser !== "" ? Upload : Login} exact />
+            <Route path="/sheet" component={currentUser !== "" ? Sheet : Login} exact />
+            <Route path="/transform" component={currentUser !== "" ? Transform : Login} exact />
+
+
+            <Route path="/login" component={currentUser !== "" ? Upload : Login} exact />
+            <Route path="/signup" component={currentUser !== "" ? Upload : Signup} exact />
+            <Route path="/forgot" component={currentUser !== "" ? Upload : ForgotPassword} exact />
+            <Route path="/changepassword" component={currentUser !== "" ? Upload : ChangePassword} exact />
+
+
+          </Switch>
+        </HashRouter>
+      </div>
     </div>
   );
 }

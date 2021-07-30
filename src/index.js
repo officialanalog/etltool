@@ -3,10 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {HashRouter} from 'react-router-dom'
+import TopProvider from "./providers/TopProvider";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <TopProvider>
+      <HashRouter>
+        <App />
+      </HashRouter>
+    </TopProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

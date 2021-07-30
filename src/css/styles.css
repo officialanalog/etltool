@@ -1,0 +1,85 @@
+/* valiation overlay */
+.validationBox{
+    position: absolute;
+    width: 616px;
+    height: 100%;
+    background: #FFFFFF;
+    position: absolute;
+    right:0;
+  }
+  .validationBox .close{
+    /* background: #ccc; */
+    top:28px;
+    right:19px;
+    position: absolute;
+    width:13px;
+    height: 13px;
+    padding:0;
+  }
+  .validationBox .close .iconify{
+    margin-top: 0;
+    padding:0;
+    line-height: 13px;
+    font-size: 20px;
+    cursor:pointer;
+  
+  }
+  
+  .overlay_label{
+    font-family: Mulish;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: rgba(60, 61, 83, 1);
+  }
+  .overlay_box{
+    height: 48px;
+    width: 567.474853515625px;
+    border-radius: 4px;
+    background: rgba(245, 246, 248, 1);
+    border: 0.5px solid rgba(204, 211, 219, 1);
+    padding: 15px 13px; 
+  }  
+
+  /* valiation overlay */
+.validationBox{
+    position: absolute;
+    width: 616px;
+    height: 100%;
+    background: #FFFFFF;
+    position: absolute;
+    right:0;
+  }
+  .validationBox .close{
+    /* background: #ccc; */
+    top:28px;
+    right:19px;
+    position: absolute;
+    width:13px;
+    height: 13px;
+    padding:0;
+  }
+  .validationBox .close .iconify{
+    margin-top: 0;
+    padding:0;
+    line-height: 13px;
+    font-size: 20px;
+    cursor:pointer;
+  
+  }
+  
+  .overlay_label{
+    font-family: Mulish;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: rgba(60, 61, 83, 1);
+    color: rgba(260, 61, 83, 1);
+  }
+ 
