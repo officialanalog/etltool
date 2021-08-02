@@ -56,7 +56,7 @@ export default function UploadButton(props) {
       /* Convert array of arrays */
 
       // { }
-      const data = XLSX.utils.sheet_to_json(ws, { dateNF: "FMT14", header: 1 });
+      const data = XLSX.utils.sheet_to_json(ws, { dateNF: "dd-mm-yyyy", header: 1, raw: false });
       var k = JSON.parse(JSON.stringify(data[0]));
       data.shift();
 

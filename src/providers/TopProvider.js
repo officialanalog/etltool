@@ -128,7 +128,7 @@ const TopProvider = (props) => {
         var valid_count = 0;
         for (var j = 0; j < processedData.length; j++) {
           var m = encodeCommas(processedData[j][row]);
-          console.log(m);
+
           if (eval(v + "('" + encodeURIComponent(m) + "')")) {
             vs[j][row] = true;
             valid_count++;
@@ -151,7 +151,8 @@ const TopProvider = (props) => {
 
   const validateDate = (valueStr) => {
     var str = decodeCommas(decodeURIComponent(valueStr));
-    const regex = /^(([^<span>()[\]\\.,;:\s@"]+(\.[^<span>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    // const regex = /^(([^<span>()[\]\\.,;:\s@"]+(\.[^<span>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const regex = /^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](19|20)\d\d$/;
     return regex.test(str.toLowerCase())
   }
 
@@ -161,13 +162,13 @@ const TopProvider = (props) => {
 
   const validateDate2 = (valueStr) => {
     var str = decodeCommas(decodeURIComponent(valueStr));
-    const regex = /([0-2][0-9]|(3)[0-1])[-|\/](((0)[0-9])|((1)[0-2]))[-|\/]\d{4}/;
+    const regex = /^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](19|20)\d\d$/;
     return regex.test(str.toLowerCase())
   }
 
   const futureDate = (valueStr) => {
     var str = decodeCommas(decodeURIComponent(valueStr));
-    const regex = /([0-2][0-9]|(3)[0-1])[-|\/](((0)[0-9])|((1)[0-2]))[-|\/]\d{4}/;
+    const regex = /^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](19|20)\d\d$/;
     var isValid = false;
     if (regex) {
       var d = str.split("-");
@@ -201,26 +202,39 @@ const TopProvider = (props) => {
   }
 
   const validateBirthday = (birthday) => {
+    console.log(birthday);
+    var regexVar = /^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](19|20)\d\d$/;
+    // add anchors; use literal
 
-    var regexVar = /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/; // add anchors; use literal
-    var regexVarTest = regexVar.test(birthday); // pass the string, not the Date
-    var userBirthDate = new Date(birthday.replace(regexVar, "$3-$2-$1")); // Use YYYY-MM-DD format
-    var todayYear = (new Date()).getFullYear(); // Always use FullYear!!
-    var cutOff19 = new Date(); // should be a Date
-    cutOff19.setFullYear(todayYear - 19); // ...
-    var cutOff95 = new Date();
-    cutOff95.setFullYear(todayYear - 100);
-    if (!regexVarTest) { // Test this before the other tests
-      return false;
-    } else if (isNaN(userBirthDate)) {
-      return false;
-    } else if (userBirthDate > cutOff19) {
-      return false;
-    } else if (userBirthDate < cutOff95) {
-      return false
-    } else {
-      return true
+
+
+    var regexVarTest = regexVar.test(birthday);
+
+    var older = false;
+    if (regexVarTest) {
+      console.log(birthday);
+      var myDate = new Date();
+      var str = birthday.split("-");
+      if (myDate.getFullYear() - str[2] > 18) {
+        older = true;
+      } else if (myDate.getFullYear() - str[2] == 18) {
+        if (myDate.getMonth() + 1 - str[1] > 0) {
+          older = true;
+        } else if (myDate.getMonth() + 1 - str[1] == 0) {
+          if (myDate.getDate() - str[0] >= 0) {
+            older = true;
+          } else {
+            older = false;
+          }
+        } else {
+          older = false
+        }
+      } else {
+        older = false
+      }
+
     }
+    return older;
   }
 
   const validateSSN = (valueStr) => {
