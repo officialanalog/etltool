@@ -41,7 +41,17 @@ export default function ForgotPassword() {
     };
     return (
         <div className="row fullscreen white">
-            <div className="col-4 blue"></div>
+            <div className="col-4 side">
+                <div className="side-body">
+                    <h3>
+                        A few clicks away from cleaning up your data.
+                    </h3>
+                    <div className="side-illustration"></div>
+                </div>
+                <div className="side-bg"></div>
+                <div className="side-blue">
+                </div>
+            </div>
             <div className="col-8 white">
                 <div className="form1 mt-4 col-6 mx-auto">
                     <h3 className="title">Reset Password</h3>
