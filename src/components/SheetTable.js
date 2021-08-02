@@ -2,8 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { topFunctions } from "../providers/TopProvider";
 import DataValidationBox from './DataValidationBox';
+import { useHistory } from 'react-router-dom'
 
 export default function SheetTable() {
+    let history = useHistory();
     const {
         originalData,
         originalTitle,
@@ -54,7 +56,11 @@ export default function SheetTable() {
 
     } = useContext(topFunctions);
 
-
+    useEffect(() => {
+        if (JSON.stringify(originalData) === "[]") {
+            history.push('/upload');
+        }
+    }, [originalData])
 
 
     return (
@@ -136,7 +142,14 @@ export default function SheetTable() {
                                             <td className="columnTitle">{index + 1}</td>
                                             {tableTitle.map((column, index2) => {
                                                 return (
-                                                    <td key={index2}>{row[column.name]}</td>
+                                                    <td key={index2}>
+                                                        {row[column.name] !== null && typeof row[column.name] !== "undefined" &&
+                                                            <span>{row[column.name].toString()}</span>
+                                                        }
+                                                        {row[column.name] === null &&
+                                                            <span></span>
+                                                        }
+                                                    </td>
                                                 )
                                             })}
                                         </tr>
@@ -161,9 +174,8 @@ export default function SheetTable() {
                             </span>
                             {Array.apply(0, Array(11)).map(function (x, i) {
                                 return (
-                                    <span>
-
-                                        {(page + i) - 5 > 0 && (page + i) - 5 < pageCount &&
+                                    <span key={i}>
+                                        {(page + i) - 5 > 0 && (page + i) - 5 <= pageCount &&
                                             <span className={`page ${page === ((page + i) - 5) ? 'active' : ''}`} key={i}
                                                 onClick={
                                                     () => setPage((page + i) - 5)

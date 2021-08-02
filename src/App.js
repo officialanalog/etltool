@@ -10,7 +10,7 @@ import Login from './authentication/Login'
 import Signup from './authentication/Signup'
 import ForgotPassword from './authentication/ForgotPassword'
 import ChangePassword from './authentication/ChangePassword'
-
+import My404Component from "./pages/My404Component";
 import { topFunctions } from "./providers/TopProvider";
 
 function App() {
@@ -34,6 +34,9 @@ function App() {
             <Route path="/signup" component={currentUser !== "" ? Upload : Signup} exact />
             <Route path="/forgot" component={currentUser !== "" ? Upload : ForgotPassword} exact />
             <Route path="/changepassword" component={currentUser !== "" ? Upload : ChangePassword} exact />
+
+
+            <Route path='*' exact={true} component={My404Component} />
 
 
           </Switch>

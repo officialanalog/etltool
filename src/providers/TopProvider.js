@@ -63,6 +63,20 @@ const TopProvider = (props) => {
     type: ""
   })
 
+
+
+  const [tableDataToShow, setTableDataToShow] = useState([]);
+  const [searchWord, setSearchWord] = useState("");
+  const [tableDataSearched, setTableDataSearched] = useState([]);
+  const [page, setPage] = useState(1);
+  const [per_page, setPer_Page] = useState(5);
+  const [startIndex, setStateIndex] = useState(0);
+  const [endIndex, setEndIndex] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
+  const [pageShown, setPageShown] = useState([0, 0]);
+
+
+
   useEffect(() => {
     if (typeof message.text !== "undefined") {
       if (message.text !== "") {
@@ -94,12 +108,15 @@ const TopProvider = (props) => {
   }, []);
 
   const encodeCommas = (stringText) => {
-    var t = stringText.replace(/'/g, '<#@?@#>');
+    console.log(stringText)
+    if (typeof stringText !== "undefined" && stringText !== null)
+      var t = stringText.toString().replace(/'/g, '<#@?@#>');
     return t;
   }
 
   const decodeCommas = (stringText) => {
-    var t = stringText.replace(/<#@?@#>/g, "'");
+    if (typeof stringText !== "undefined" && stringText !== null)
+      var t = stringText.toString().replace(/<#@?@#>/g, "'");
     return t;
   }
   const validate = (row, validation) => {
@@ -379,55 +396,76 @@ const TopProvider = (props) => {
 
 
 
-  const [tableDataToShow, setTableDataToShow] = useState([]);
-  const [searchWord, setSearchWord] = useState("");
-  const [tableDataSearched, setTableDataSearched] = useState([]);
-  const [page, setPage] = useState(1);
-  const [per_page, setPer_Page] = useState(5);
-  const [startIndex, setStateIndex] = useState(0);
-  const [endIndex, setEndIndex] = useState(0);
-  const [pageCount, setPageCount] = useState(0);
-  const [pageShown, setPageShown] = useState([0, 0]);
 
-  const filterTable = (td) => {
+  const filterTable = (td, si, ei) => {
+    console.log(td)
+    console.log(si, ei)
     var c = [];
     var filtered_1 = td.filter((tr, index) => {
-      if (startIndex <= index && endIndex >= index) {
+      if (si <= index && ei >= index) {
         return true;
       }
     })
-    return filtered_1
+    console.log(startIndex, endIndex)
+    return filtered_1;
     // for(var i = )
   }
 
-  const searchTable = (td, word) => {
-    var filtered_1 = td.filter((tr, index) => {
-      for (var i = 0; i < tableTitle.length; i++) {
-        if (typeof tableTitle[i] !== "undefined") {
-          var tn = tr[tableTitle[i].name].toLowerCase()
-          if (tn.indexOf(word.toLowerCase()) > -1) {
-            console.log(tableTitle[i].name);
-            return true;
-            break;
+  const searchTable = (td, word = "") => {
+    if (typeof tableTitle !== "undefined") {
+      if (JSON.stringify(tableTitle) !== "[]") {
+        if (typeof td !== "undefined") {
+          if (JSON.stringify(td) !== "") {
+            var filtered_1 = td.filter((tr, index) => {
+              for (var i = 0; i < tableTitle.length; i++) {
+                if (typeof tableTitle[i] !== "undefined") {
+                  var tn = tr[tableTitle[i].name];
+                  if (typeof tn !== "undefined" && tn !== null) {
+
+                    // remove last 14
+                    // test date
+                    // if valid
+                    // add the first 10
+
+
+
+
+                    tn = tn.toString();
+                    word = word.toString();
+                    tn = tn.toLowerCase();
+                    word = word.toLowerCase();
+                    // i removed the convert to lowercase temporarily;
+
+                    if (tn.indexOf(word) > -1) {
+                      return true;
+                      break;
+                    }
+                  } else {
+
+                  }
+                } else {
+                  return true
+                }
+              }
+            })
+            // console.log(filtered_1);
+            return filtered_1
           }
-        } else {
-          return true
         }
+      } else {
+        return td;
       }
-    })
-    // console.log(filtered_1);
-    return filtered_1
+    } else {
+      return td
+    }
   }
 
-  useEffect(() => {
+
+  useEffect(async () => {
     var si = (page - 1) * per_page;
     var ei = (page * per_page) - 1;
     var pc = Math.ceil(tableDataSearched.length / per_page);
     var psstart = page - 5;
-    setStateIndex(si);
-    setEndIndex(ei);
-    setPageCount(pc)
-
     if (page < 5) {
       psstart = 0;
     } else {
@@ -438,26 +476,30 @@ const TopProvider = (props) => {
       psend = pageCount
     }
     var ps = [psstart, psend]
-    setPageShown(ps)
 
+    console.log(psstart, psend, pc);
+    await setStateIndex(si);
+    await setEndIndex(ei);
+    await setPageCount(pc)
+    await setPageShown(ps)
+
+    var tds = await filterTable(tableDataSearched, si, ei,);
+    await setTableDataToShow(tds);
   }, [
     tableDataSearched,
+    page,
     per_page,
-    page])
+  ])
 
+  useEffect(async () => {
+    if (typeof tableData !== "undefined" && typeof searchWord !== "undefined") {
+      var tds = await searchTable(tableData, searchWord);
+      // console.log(tds)
+      setTableDataSearched(tds);
 
-  useEffect(() => {
-    var tds = searchTable(tableData, searchWord);
-    setTableDataSearched(tds);
+    }
   }, [searchWord, tableData, per_page])
 
-  useEffect(() => {
-    var tds = filterTable(tableDataSearched);
-    setTableDataToShow(tds);
-  }, [
-    tableDataSearched,
-    page
-  ])
 
 
   return (

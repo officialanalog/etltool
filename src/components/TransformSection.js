@@ -1,7 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Link } from "react-router-dom"
 import { topFunctions } from "../providers/TopProvider";
+
+import { useHistory } from 'react-router-dom'
+
+
 export default function TransformSection() {
+
+
+    let history = useHistory();
 
     const {
         originalData,
@@ -25,6 +32,13 @@ export default function TransformSection() {
         ignoreUnmappped,
         setIgnoreUnmappped
     } = useContext(topFunctions);
+    const [ig, setIG] = useState(false);
+
+    useEffect(() => {
+        if (JSON.stringify(originalData) === "[]") {
+            history.push('/upload');
+        }
+    }, [originalData])
 
     useEffect(() => {
         if (ignoreUnmappped) {
@@ -37,18 +51,18 @@ export default function TransformSection() {
                     }
                 }
             }
-        } else {
-            if (typeof rowDetails !== undefined) {
-                for (var i = 0; i < rowDetails.length; i++) {
-                    if (rowDetails[i].new_name === "") {
-                        var rd = [...rowDetails];
-                        rd[i].ignoreRow = false;
-                        setRowDetails(rd);
-                    }
-                }
-            }
+            setIgnoreUnmappped(false);
         }
     }, [ignoreUnmappped]);
+
+
+    // useEffect(() => {
+    //     if (ignoreUnmappped) {
+    //         console.log(rowDetails[rowToTransform]["ignoreRow"])
+    //         if (rowDetails[rowToTransform]["ignoreRow"] && rowDetails[rowToTransform]["new_name"] === "")
+    //             setIgnoreUnmappped(false)
+    //     }
+    // }, [rowDetails[rowToTransform]["ignoreRow"]]);
     return (
         <div className="transform_section">
             <div className="notes1">
@@ -59,6 +73,7 @@ export default function TransformSection() {
                 <div className="col-6 fieldset">
                     <div className="input_title">Original Column Name</div>
                     <select className="input1"
+                        value={rowToTransform}
                         onChange={(e) => {
                             setRowToTransform(e.target.value)
                             console.log(rowToTransform)
@@ -119,6 +134,10 @@ export default function TransformSection() {
                     <div className="input_title">Set the type format</div>
                     {typeof rowDetails[rowToTransform] !== "undefined" &&
                         <select className="input1"
+                            value={typeof rowDetails[rowToTransform] !== "undefined" ?
+                                rowDetails[rowToTransform].validation :
+                                ""
+                            }
                             onChange={(e) => {
 
                                 var v = [...rowDetails]
@@ -158,30 +177,42 @@ export default function TransformSection() {
                                             <span>
                                                 {!rowDetails[index].ignoreRow
                                                     &&
-                                                    <div key={index}
+                                                    <div
                                                         value={index}
-                                                        className="column_names"
+                                                        className={`column_names ${index == rowToTransform ? 'active' : ''}`}
                                                     >
-                                                        {thisRow.new_name !== "" ?
-                                                            <span>
-                                                                {thisRow.new_name}
-                                                            </span>
-                                                            : originalTitle[index]
-                                                        }
-                                                        <span
-                                                            onClick={(e) => {
-                                                                var v = [...rowDetails]
-                                                                if (typeof v[index] !== "undefined") {
-                                                                    v[index].ignoreRow = true;
-                                                                    validate(rowToTransform, e.target.value)
-                                                                    setRowDetails(v);
+                                                        <div>
+                                                            <span className="text"
+                                                                onClick={(e) => {
+                                                                    setRowToTransform(index)
+                                                                }}
+                                                            >
+                                                                {thisRow.new_name !== "" ?
+                                                                    <span>
+                                                                        {thisRow.new_name}
+                                                                    </span>
+                                                                    : originalTitle[index]
                                                                 }
-                                                            }} >
+                                                            </span>
                                                             <span
-                                                                className="iconify" data-icon="iconoir:cancel" data-inline="false"
+                                                                onClick={(e) => {
+                                                                    var v = [...rowDetails]
+                                                                    if (typeof v[index] !== "undefined") {
+                                                                        v[index].ignoreRow = true;
+                                                                        validate(rowToTransform, e.target.value)
+                                                                        setRowDetails(v);
+                                                                    }
+                                                                }} >
+                                                                <span
+                                                                    className="iconify cancel" data-icon="iconoir:cancel" data-inline="false"
 
-                                                            ></span>
-                                                        </span>
+                                                                ></span>
+                                                            </span>
+                                                            <div className={`validBox 
+                                                            ${rowDetails[index].invalid_rows == 0 ? 'valid' : ''}`}>
+                                                                {rowDetails[index].invalid_rows} Invalid Rows
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 }
                                             </span>

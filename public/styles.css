@@ -3,7 +3,7 @@
 
 body {
   min-width: 1000px;
-  width: 98%;
+  width: 100%;
   background: #f5f6f8;
   margin:auto;
 }
@@ -67,6 +67,39 @@ body {
   clear: both;
 }
 
+/* 404 */
+.My404_image{
+  width:200px;
+  height: 200px;
+  margin: 50px auto;
+  background-image: url(./my404.svg);
+  width:100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* background: silver; */
+}
+.My404page{
+text-align: center;
+}
+
+
+.My404_title{
+  font-family: Mulish;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 106px;
+  margin-top: 0;
+  line-height: 90px;
+  color:#0B4996;
+}
+
+.My404_subtitle{
+  font-family: Mulish;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 100px;
+}
 
 /* form1 */
 .form1{
@@ -140,9 +173,12 @@ body {
   line-height: 18px;
 
 }
+.btn-blue{
+  
+  color:#fff;
+}
 .form1 .btn-blue{
   width:100%;
-  color:#fff;
   margin-top: 57px;
 }
 
@@ -336,20 +372,57 @@ notes2 */
   box-sizing: border-box;
   border-radius: 4px;
   height: 151px;
+  overflow:auto;
 }
 
 .column_area .column_names{
-  height: 34px;
+  
   background: #B8D7FE;
   opacity: 0.4;
   border-radius: 4px;
   margin: 7.5px;
   float: left;
-  padding:5px 10px;
+  padding:5px 30px 50px 5px;
+  position:relative;
+  max-height: 34px;
+}
+
+.column_area .column_names.active{
+  height: 2px !important;
+  border:solid 1px #0B4996;
+  padding:4px 30px 49px 5px;
+}
+
+.column_area .column_names .text{
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
+.column_area .column_names .validBox{
+  width:100%;
+  font-size: 10px;
+  text-align: center;
+  font-size: 10px;
+  background: #FFCDD2;
+  color: rgba(198, 40, 40, 1);
+  line-height: 20px;
+  cursor: pointer;
+  padding:0 5px
 
 }
+.column_area .column_names .validBox.valid{
+  background: #f8f9fa;
+  color: rgba(67, 160, 71, 1);
+
+}
+
 .column_area .iconify{
+  right:5px;
+  top:10px;
+  font-weight:600;
   cursor: pointer;
+  position:absolute;
 }
 .radioText {
   font-family: Mulish;
