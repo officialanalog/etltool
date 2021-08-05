@@ -139,7 +139,7 @@ export default function SheetTable() {
                                 {tableDataToShow.map((row, index) => {
                                     return (
                                         <tr className="sheetBox_tbody" key={index}>
-                                            <td className="columnTitle">{index + 1}</td>
+                                            <td className="columnTitle">{((page - 1) * per_page) + index + 1}</td>
                                             {tableTitle.map((column, index2) => {
                                                 return (
                                                     <td key={index2}>

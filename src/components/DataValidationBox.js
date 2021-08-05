@@ -104,9 +104,10 @@ export default function DataValidationBox() {
                     <div className="overlay_table mt-3">
 
                         <div className="overlay_table_head row">
+                            <div className="col-1">Row #</div>
                             <div className="col-5">Original row text</div>
                             <div className="col-1"></div>
-                            <div className="col-6">Replace text with</div>
+                            <div className="col-5">Replace text with</div>
                         </div>
 
 
@@ -122,12 +123,17 @@ export default function DataValidationBox() {
                                         <span>
                                             {!validationStatus[index][rowToTransform] &&
                                                 <div className={`row overlay_table_tbody row mt-2 ${index % 2 == 0 ? 'odd' : ''}`} key={index}>
+
+                                                    <span className="col-1">
+                                                        {index + 1}
+                                                    </span>
+
                                                     <div className="col-5 td_box"><div className="text">{data[rowToTransform]}</div></div>
                                                     <span className="col-1">
                                                         <span className="iconify " data-icon="akar-icons:arrow-right" data-inline="false"></span>
                                                     </span>
                                                     {typeof processedData[index] !== "undefined" &&
-                                                        <div className={`col-6 td_box ${validationStatus[index][rowToTransform] ? 'valid' : 'invalid'}`}>
+                                                        <div className={`col-5 td_box ${validationStatus[index][rowToTransform] ? 'valid' : 'invalid'}`}>
                                                             <input value={rowTempData[index][rowToTransform]}
                                                                 className="dataInput"
 
