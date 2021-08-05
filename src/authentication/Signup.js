@@ -4,7 +4,7 @@ import getFirebase from "../firebase/firebase";
 import useInput from "../hooks/useInputs"
 import { topFunctions } from "../providers/TopProvider";
 
-
+import LoginwithGoogle from './LoginwithGoogle';
 export default function Signup() {
 
     const {
@@ -87,6 +87,7 @@ export default function Signup() {
                         </div>
                         <button type="submit" className="btn btn-blue mb-3"
                         >Sign Up</button>
+                        < LoginwithGoogle />
 
                         <div className="form1-footnote">
                             Already using our ETL platform? <Link to="/login">Sign in</Link> to clean up your next data sheet

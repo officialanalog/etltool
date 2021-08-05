@@ -90,6 +90,9 @@ body {
   left: calc(50% - 100px);
   width: 200px;
 }
+.btn-white{
+
+}
 .btn-green {
   background: #43a047;
   border-radius: 6px;
@@ -101,6 +104,46 @@ body {
   line-height: 20px;
   letter-spacing: 0em;
   text-align: center;
+}
+.btn-white{
+  font-family: Mulish;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #000000;
+  /* position: relative; */
+  width: 100%;
+  display: flex;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  height: 48px;
+  margin-top: 32px;
+  border-radius: 6px;
+
+}
+.form1-footnote{
+  margin-top: 30px;
+  font-family: Mulish;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+
+}
+.btn-white .iconify{
+  margin-top: 10px
+}
+.btn-white .text{
+  margin:auto;
+  /* background:#B8D7FE; */
+  /* width:100% !important; */
+  /* position: absolute; */
 }
 .btn-blue {
   background: #0b4996;

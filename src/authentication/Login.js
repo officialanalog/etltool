@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import getFirebase from "../firebase/firebase";
 import useInput from "../hooks/useInputs"
 import { topFunctions } from "../providers/TopProvider";
+import LoginwithGoogle from './LoginwithGoogle';
 
 export default function Login() {
 
@@ -83,6 +84,8 @@ export default function Login() {
                         </div>
                         <button type="submit" className="btn btn-blue btn-block mb-3"
                         >Sign in</button>
+
+                        <LoginwithGoogle />
 
                         <div className="form1-footnote">
                             New User on our ETL platform? <Link to="/signup">Sign Up</Link> to clean up your next data sheet.

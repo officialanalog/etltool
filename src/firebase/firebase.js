@@ -1,5 +1,5 @@
 import firebase from "firebase";
-
+import "firebase/auth";
 import config from "./config";
 
 // initialize firebase
@@ -14,3 +14,5 @@ export default function getFirebase() {
     return null
 }
 
+
+export const provider = new firebase.auth.GoogleAuthProvider();
